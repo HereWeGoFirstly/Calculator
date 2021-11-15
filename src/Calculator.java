@@ -143,13 +143,55 @@ class Transformation{
     }
 }
 class RomanNumbers{
-    static String[] list = {"0","I","II","III","IV","V","VI","VII","VIII","IX","X"};
+    public static String romanNumbers(int number, String firstN, String secondN, String thirdN){
+        switch (number){
+            case 1 ->{
+                return firstN;
+            }
+            case 2 ->{
+                return firstN + firstN;
+            }
+            case 3 ->{
+                return firstN + firstN + firstN;
+            }
+            case 4 ->{
+                return firstN + secondN;
+            }
+            case 5 ->{
+                return secondN;
+            }
+            case 6 ->{
+                return secondN + firstN;
+            }
+            case 7 ->{
+                return secondN + firstN + firstN;
+            }
+            case 8 ->{
+                return secondN + firstN + firstN + firstN;
+            }
+            case 9 ->{
+                return firstN + thirdN;
+            }
+            case 10 ->{
+                return thirdN;
+            }
+        }
+        return "";
+    }
+    public static String convertToRoman(int number){
+        String romanOnes = romanNumbers(number%10,"I", "V", "X");
+        number/=10;
+        String romanTens = romanNumbers(number%10, "X", "L", "C");
+        number/=10;
+        String romanHundreds = romanNumbers(number%10, "C", "D", "M");
+        return romanHundreds + romanTens + romanOnes;
+    }
 }
 enum Operation{
     SUM{
         public void action(int x, int y){
             if(Transformation.numbersAreRoman){
-                System.out.println(RomanNumbers.list[x+y]);
+                System.out.println(RomanNumbers.convertToRoman(x+y));
             }
             else {
                 System.out.println(x + y);
@@ -160,7 +202,7 @@ enum Operation{
         public void action(int x, int y) {
             try {
                 if (Transformation.numbersAreRoman && (x - y) > 0) {
-                    System.out.println(RomanNumbers.list[x - y]);
+                    System.out.println(RomanNumbers.convertToRoman(x - y));
                 } else if (Transformation.numbersAreRoman && (x - y) < 0) {
                     throw new Exception("в римской системе нет отрицательных чисел");
                 } else {
@@ -176,7 +218,7 @@ enum Operation{
     MULTIPLY{
         public void action(int x, int y){
             if (Transformation.numbersAreRoman) {
-                System.out.println(RomanNumbers.list[x * y]);
+                System.out.println(RomanNumbers.convertToRoman(x * y));
             } else {
                 System.out.println(x * y);
             }
@@ -185,7 +227,7 @@ enum Operation{
     DIVISION{
         public void action(int x, int y){
             if (Transformation.numbersAreRoman) {
-                System.out.println(RomanNumbers.list[x / y]);
+                System.out.println(RomanNumbers.convertToRoman(x / y));
             } else {
                 System.out.println(x / y);
             }
